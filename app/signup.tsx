@@ -10,7 +10,7 @@ import { StatusBar } from "expo-status-bar";
 import LoginImage from "@/assets/images/login.jpg";
 import { Octicons } from "@expo/vector-icons";
 import LottieView from "lottie-react-native";
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -19,12 +19,13 @@ import { Link, useRouter } from "expo-router";
 import CustomKeyboardView from "@/components/CustomKeyboardView";
 const signup = () => {
   const router = useRouter();
-  const animationRef = useRef<LottieView>(null);
-
-  useEffect(() => {
-    animationRef.current?.play();
-    animationRef.current?.play(30, 120);
-  }, []);
+  const [isLoading,setIsLoading]=useState<boolean>(false);
+  const handleRegisterForm = async () => {
+    try {
+    } catch (error) {
+      console.log((error as Error).message);
+    }
+  };
   return (
     <CustomKeyboardView>
       <View className="flex-1">
@@ -41,7 +42,8 @@ const signup = () => {
             /> */}
             <LottieView
               style={{ height: hp(40), width: wp(90) }}
-              ref={animationRef}
+              loop
+              autoPlay
               source={require("../assets/lottie/login-image.json")}
             />
           </View>
@@ -81,8 +83,17 @@ const signup = () => {
                 secureTextEntry
               />
             </View>
-
-            <TouchableOpacity className="bg-blue-800 rounded-xl px-4 py-2 text-center">
+<View>
+    {
+        isLoading?(
+            
+        )
+    }
+</View>
+            <TouchableOpacity
+              onPress={handleRegisterForm}
+              className="bg-blue-800 rounded-xl px-4 py-2 text-center"
+            >
               <Text
                 style={{ fontSize: hp(2.7) }}
                 className="text-white text-center font-semibold tracking-widest"

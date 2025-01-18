@@ -21,8 +21,10 @@ import {
 import { Link, useRouter } from "expo-router";
 import { useRef } from "react";
 import CustomKeyboardView from "@/components/CustomKeyboardView";
+import { useAuth } from "@/context/AuthContext";
 const signin = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const {register}=useAuth();
   const router = useRouter();
   const emialRef = useRef("");
   const passwordRef = useRef("");
@@ -41,6 +43,7 @@ const signin = () => {
         setIsLoading(false);
         return;
       }
+      await reg
       //   setIsLoading(false);
       //   Login process start here
     } catch (error) {

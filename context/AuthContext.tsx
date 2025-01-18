@@ -5,6 +5,12 @@ import React, {
   useState,
   ReactNode,
 } from "react";
+import {
+  onAuthStateChanged,
+  createUserWithEmailAndPassword,
+} from "firebase/auth";
+import { auth, db } from "@/firebaseConfig";
+import { getDoc, doc, setDoc } from "firebase/firestore";
 
 // Define types for the user and context
 interface User {
@@ -37,18 +43,26 @@ interface AuthProviderProps {
 export const AuthContextProvider: React.FC<AuthProviderProps> = ({
   children,
 }) => {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | undefined>(
     false
   );
 
   useEffect(() => {
-   
+    const unsub = onAuthStateChanged(auth, (data) => {
+      if (data) {
+        setIsAuthenticated(true);
+        setUser(data);
+      } else {
+        setIsAuthenticated(false);
+        setIsAuthenticated(null);
+      }
+    });
+    return unsub;
   }, []);
 
   const login = async (email: string, password: string): Promise<void> => {
     try {
-     
     } catch (error) {
       console.error("Login error:", error);
     }
@@ -63,13 +77,24 @@ export const AuthContextProvider: React.FC<AuthProviderProps> = ({
   const register = async (
     email: string,
     password: string,
-    username: string,
-    profileURL: string
-  ): Promise<void> => {
+    username: string
+  ): Promise<{ success: boolean; data: any; error: any }> => {
     try {
-    
+      const response = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      await setDoc(doc(db, "users", response?.user?.uid), {
+        username,
+        profileImage: response?.user?.photoURL,
+        useId: response?.user?.uid,
+      });
+
+      return { success: true, data: response?.user, error: null };
     } catch (error) {
       console.error("Registration error:", error);
+      return { success: false, data: null, error: (error as Error).message };
     }
   };
 
