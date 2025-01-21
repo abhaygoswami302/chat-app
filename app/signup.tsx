@@ -17,9 +17,10 @@ import {
 } from "react-native-responsive-screen";
 import { Link, useRouter } from "expo-router";
 import CustomKeyboardView from "@/components/CustomKeyboardView";
+import Loading from "@/components/Loading";
 const signup = () => {
   const router = useRouter();
-  const [isLoading,setIsLoading]=useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const handleRegisterForm = async () => {
     try {
     } catch (error) {
@@ -83,24 +84,24 @@ const signup = () => {
                 secureTextEntry
               />
             </View>
-<View>
-    {
-        isLoading?(
-            
-        )
-    }
-</View>
-            <TouchableOpacity
-              onPress={handleRegisterForm}
-              className="bg-blue-800 rounded-xl px-4 py-2 text-center"
-            >
-              <Text
-                style={{ fontSize: hp(2.7) }}
-                className="text-white text-center font-semibold tracking-widest"
-              >
-                Register
-              </Text>
-            </TouchableOpacity>
+            <View>
+              {isLoading ? (
+                <Loading size={hp(8)} />
+              ) : (
+                <TouchableOpacity
+                  onPress={handleRegisterForm}
+                  className="bg-blue-800 rounded-xl px-4 py-2 text-center"
+                >
+                  <Text
+                    style={{ fontSize: hp(2.7) }}
+                    className="text-white text-center font-semibold tracking-widest"
+                  >
+                    Register
+                  </Text>
+                </TouchableOpacity>
+              )}
+            </View>
+
             <View className="flex-row items-center justify-center gap-1">
               <Text
                 style={{ fontSize: hp(1.7) }}
