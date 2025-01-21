@@ -11,9 +11,11 @@ const Mainlayout = () => {
     if (typeof isAuthenticated === "undefined") return;
     const inApp = segments[0] == "(app)";
     if (isAuthenticated && !inApp) {
-      return router.replace("/home");
+      return router.replace("/");
+      // return router.replace("/home");
     } else if (isAuthenticated === false) {
-      return router.replace("/signin");
+      return router.replace("/");
+      // return router.replace("/signin");
     }
   }, [isAuthenticated]);
   return <Slot />;

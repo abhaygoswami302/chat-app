@@ -10,7 +10,7 @@ import { StatusBar } from "expo-status-bar";
 import LoginImage from "@/assets/images/login.jpg";
 import { Octicons } from "@expo/vector-icons";
 import LottieView from "lottie-react-native";
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState, ChangeEvent } from "react";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -18,11 +18,30 @@ import {
 import { Link, useRouter } from "expo-router";
 import CustomKeyboardView from "@/components/CustomKeyboardView";
 import Loading from "@/components/Loading";
+import { useAuth } from "@/context/AuthContext";
+
+interface InputDataProps {
+  username: string;
+  email: string;
+  password: string;
+}
+
 const signup = () => {
   const router = useRouter();
+  const { register } = useAuth();
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [inputData, setInputData] = useState<InputDataProps>({
+    username: "",
+    email: "",
+    password: "",
+  });
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { value, name } = event.target;
+    console.log(value, name);
+  };
   const handleRegisterForm = async () => {
     try {
+      await register();
     } catch (error) {
       console.log((error as Error).message);
     }
@@ -82,6 +101,7 @@ const signup = () => {
                 placeholder="Enter your password"
                 placeholderTextColor={"gray"}
                 secureTextEntry
+                onChangeText={(e)=>handleInputChange(e)}
               />
             </View>
             <View>

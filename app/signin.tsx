@@ -43,7 +43,7 @@ const signin = () => {
         setIsLoading(false);
         return;
       }
-      await reg
+      await register(emialRef.current,passwordRef.current)
       //   setIsLoading(false);
       //   Login process start here
     } catch (error) {
