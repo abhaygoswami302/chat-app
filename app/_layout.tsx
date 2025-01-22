@@ -11,14 +11,16 @@ const Mainlayout = () => {
     if (typeof isAuthenticated === "undefined") return;
     const inApp = segments[0] == "(app)";
     if (isAuthenticated && !inApp) {
-      return router.replace("/(tab)/index");
+      return router.replace("/(tab)");
     } else if (isAuthenticated === false) {
-      console.log("hellow")
-      return router.replace("/(loading)/index");
+      return router.replace("/signin");
       // return router.replace("/signin");
     }
   }, [isAuthenticated]);
-  return <Slot />;
+  return (
+    
+  <Slot />
+);
 };
 
 const RootLayout = () => {

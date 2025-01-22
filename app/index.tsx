@@ -1,70 +1,179 @@
+import React, { Component, useEffect } from "react";
 import {
-  View,
-  Text,
+  ActivityIndicator,
+  ScrollView,
   StyleSheet,
+  Text,
+  View,
   Image,
-  ActivityIndicatorComponent,
-  Animated,
-  Easing,
+  ImageBackground,
+  FlatList,
   Pressable,
+  Alert,
 } from "react-native";
-import React, { useEffect, useRef } from "react";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import { Link } from "expo-router";
+import LinearGradient from "react-native-linear-gradient";
+
+function StartPage() {
+  const data = [
+    { id: 1, name: "lorem1", image: "https://picsum.photos/200/300" },
+    { id: 2, name: "lorem2", image: "https://picsum.photos/200" },
+    { id: 3, name: "lorem3", image: "https://picsum.photos/id/237/200/300" },
+    { id: 4, name: "lorem4", image: "https://picsum.photos/id/235/200/300" },
+    { id: 5, name: "lorem5", image: "https://picsum.photos/id/203/200/300" },
+    { id: 6, name: "lorem6", image: "https://picsum.photos/id/364/200/300" },
+    { id: 7, name: "lorem7", image: "https://picsum.photos/id/366/200/300" },
+    { id: 8, name: "lorem8", image: "https://picsum.photos/id/453/200/300" },
+    { id: 9, name: "lorem9", image: "https://picsum.photos/id/102/200/300" },
+    { id: 10, name: "lorem10", image: "https://picsum.photos/id/237/200/745" },
+    { id: 11, name: "lorem11", image: "https://picsum.photos/id/789/200/300" },
+    { id: 12, name: "lorem12", image: "https://picsum.photos/id/143/200/300" },
+    { id: 13, name: "lorem13", image: "https://picsum.photos/id/456/200/300" },
+    { id: 14, name: "lorem14", image: "https://picsum.photos/id/123/200/300" },
+    { id: 15, name: "lorem15", image: "https://picsum.photos/id/741/200/300" },
+    { id: 16, name: "lorem16", image: "https://picsum.photos/id/789/200/300" },
+  ];
+  const renderItems = ({ item }:itemsProps) => {
 
 
-const index = () => {
-    const handleAddToCart =(id)=>{
-        
-        alert(id)
-    }
+    return (
+      <View style={styles.Items}>
+        <Pressable onPress={() => {}}>
+          <Image
+            source={{ uri: item.image }}
+            style={styles.image}
+            className="rounded-full w-7 h-7"
+          />
+        </Pressable>
+        <Text style={styles.ItemsTitle}>{item.name}</Text>
+      </View>
+    );
+  };
   return (
-    <View style={styles.Banner}>
-      <Text style={styles.textIn}>Index</Text>
-      <Pressable onPress={(id)=>handleAddToCart("dsfsdfdsdsgdsg")}><Text>Add to cart</Text></Pressable>
-      <Link style={styles.button} href={"/(loading)/index"}>
-        Home Page{" "}
-      </Link>
+    <View
+      // source={require("../assets/images/bg-site.jpg")}
+      // resizeMode={"cover"}
+      style={{ flex: 1 }}
+      className="px-2"
+    >
+      <View style={styles.headerView}>
+        <Pressable>
+          <Image
+            source={require("../assets/images/Camera Icon.png")}
+            width={105}
+            height={28}
+            style={styles.logoDem}
+          />
+        </Pressable>
+        <Pressable>
+          <Image
+            source={require("../assets/images/Instagram Logo.png")}
+            width={105}
+            height={28}
+            style={styles.logoDem}
+          />
+        </Pressable>
+
+        <View style={styles.ImageStyle}>
+          <Pressable>
+            <Image
+              source={require("../assets/images/IGTV.png")}
+              width={105}
+              height={28}
+              style={styles.logoDem}
+            />
+          </Pressable>
+          <Pressable>
+            <Image
+              source={require("../assets/images/Messanger.png")}
+              width={105}
+              height={28}
+              style={styles.logoDem}
+            />
+          </Pressable>
+        </View>
+      </View>
+      <FlatList
+        data={data}
+        renderItem={renderItems}
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        ItemSeparatorComponent={() => <View style={styles.seperator} />}
+      />
+
+      {/* <ActivityIndicator size={"large"} color={"gray"}/> */}
     </View>
   );
-};
+}
 
-export default index;
+export default StartPage;
 
 const styles = StyleSheet.create({
-  Banner: {
-    flex: 1,
-    justifyContent: "space-between",
-    alignItems: "center",
-    backgroundColor: "#1E1E1E",
-    paddingVertical: 3,
+  contentContainer: {
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
+    gap: 10,
   },
-  logoContainer: {
-    flexDirection: "column",
-    alignItems: "center",
+  gradientBorder: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    padding: 3, // Space between gradient and inner content
     justifyContent: "center",
-    gap: hp(1.4),
+    alignItems: "center",
   },
-
-  logoImg: {
-    width: wp(50),
-    height: hp(15),
+  headerView: {
+    paddingHorizontal: 5,
+    paddingVertical: 10,
+    justifyContent: "space-between",
+    alignContent: "center",
+    flexDirection: "row",
+    gap: 2,
+    borderBottomWidth:1,
+    borderBottomColor:"#E5E5E5",
+    borderStyle:"solid"
+  },
+  logoDem: {
     resizeMode: "contain",
+    alignSelf: "center",
   },
-  loading: {
-    width: wp(10),
-    height: hp(10),
-    resizeMode: "contain",
+  ImageStyle: {
+    flexDirection: "row",
+    gap: 20,
+    alignItems: "center",
   },
-  button: {
-    fontSize: 18,
+  image: {
+    height: 70,
+    width: 70,
+    borderRadius: 99999,
+    objectFit: "cover",
+    backgroundColor: "#ffffff",
+    borderWidth: 2,
+    borderStyle: "solid",
+    borderColor: "#f5f5f5",
+  },
+  Items: {
+    alignItems: "center",
+    justifyContent: "flex-start",
+    marginTop: hp(1),
+  },
+  appTitle: {
+    fontSize: hp(3),
     color: "#ffffff",
+    textAlign: "center",
+    fontWeight: "700",
   },
-  textIn:{
-    fontSize:7,
-    color:"#fffffff"
-  }
+  ItemsTitle: {
+    fontSize: hp(1.7),
+    color: "#101010",
+    textAlign: "center",
+    fontWeight: "500",
+    textTransform: "capitalize",
+  },
+  seperator: {
+    width: 10,
+  },
 });
