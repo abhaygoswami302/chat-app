@@ -1,5 +1,5 @@
 import React, { Component, useEffect } from "react";
-import { Slot, useRouter, useSegments } from "expo-router";
+import { Slot, Stack, useRouter, useSegments } from "expo-router";
 import "../global.css";
 import { AuthContextProvider, useAuth } from "@/context/AuthContext";
 
@@ -11,17 +11,17 @@ const Mainlayout = () => {
     if (typeof isAuthenticated === "undefined") return;
     const inApp = segments[0] == "(app)";
     if (isAuthenticated && !inApp) {
-      return router.replace("/");
-      // return router.replace("/home");
+      return router.replace("/(tab)/index");
     } else if (isAuthenticated === false) {
-      return router.replace("/");
+      console.log("hellow")
+      return router.replace("/(loading)/index");
       // return router.replace("/signin");
     }
   }, [isAuthenticated]);
   return <Slot />;
 };
 
-const RootLayout: React.FC = () => {
+const RootLayout = () => {
   return (
     <AuthContextProvider>
       <Mainlayout />
