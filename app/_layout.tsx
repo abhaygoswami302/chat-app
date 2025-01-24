@@ -17,10 +17,7 @@ const Mainlayout = () => {
       // return router.replace("/signin");
     }
   }, [isAuthenticated]);
-  return (
-    
-  <Slot />
-);
+  return <Slot />;
 };
 
 const RootLayout = () => {

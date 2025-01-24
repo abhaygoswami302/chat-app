@@ -4,12 +4,18 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import React from "react";
+import { useRouter } from "expo-router";
 
 const Header = () => {
+  const router=useRouter();
+  const handlePageRouting=()=>{
+    console.log("helloe")
+    return router.push("/post/homepost")
+  }
   return (
     <View style={styles.headerView}>
       <View>
-        <Pressable>
+        <Pressable onPress={handlePageRouting }>
           <Image
             source={require("@/assets/images/Camera Icon.png")}
             width={105}
@@ -55,7 +61,7 @@ export default Header;
 
 const styles = StyleSheet.create({
   headerView: {
-    paddingHorizontal:wp(1.5),
+    paddingHorizontal: wp(1.5),
     paddingVertical: 20,
     justifyContent: "space-between",
     alignContent: "center",
@@ -65,8 +71,8 @@ const styles = StyleSheet.create({
     borderBottomColor: "#E5E5E5",
     borderStyle: "solid",
   },
-  logoContainer:{
-    marginRight:-50
+  logoContainer: {
+    marginRight: -50,
   },
   logoDem: {
     resizeMode: "contain",

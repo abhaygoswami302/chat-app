@@ -33,7 +33,7 @@ const _layout = () => {
         }}
       />
       <Tabs.Screen
-        name="post"
+        name="post/index"
         options={{
           title: "Post",
           headerShown: false,

@@ -7,12 +7,12 @@ import {
   Dimensions,
   Pressable,
 } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import { AntDesign, Entypo, Fontisto } from "@expo/vector-icons";
+import { Entypo } from "@expo/vector-icons";
 import { userPostData } from "@/jsonData/PostData";
 interface mediaItemProps {
   item: {
@@ -36,6 +36,10 @@ interface PostItemProps {
 
 const HomePost = () => {
   const screenWidth = Dimensions.get("window").width;
+  const [userData, setUserData] = useState<PostItemProps | null>();
+  useEffect(() => {
+    setUserData(userPostData);
+  }, []);
 
   const renderMediaItem = ({ item }: mediaItemProps) => {
     return (
@@ -167,7 +171,12 @@ const HomePost = () => {
 
   return (
     <View style={styles.postContainer}>
-      <FlatList data={userPostData} renderItem={renderItem} />
+      <FlatList
+        data={userData}
+        renderItem={renderItem}
+        scrollsToTop={true}
+        keyExtractor={(postId) => postId.id}
+      />
     </View>
   );
 };
